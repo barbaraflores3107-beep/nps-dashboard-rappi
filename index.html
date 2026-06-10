@@ -1,1 +1,55 @@
-cat ~/Downloads/nps_rappi_dashboard.html | pbcopy
+      </div>
+    </div>
+  `;
+
+  // Charts
+  const gridColor = 'rgba(255,255,255,0.05)';
+  const tickColor = '#555';
+  const baseOpts = {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: {
+      backgroundColor: '#1e1e1c', titleColor: '#ccc', bodyColor: '#888',
+      borderColor: '#333', borderWidth: 0.5, padding: 10
+    }},
+    scales: {
+      x: { grid: { display: false }, ticks: { color: tickColor, font: { size: 10 } } },
+      y: { min: -100, max: 100, grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10 }, stepSize: 50 },
+           title: { display: false } }
+    }
+  };
+
+  chartSemanal = new Chart(document.getElementById('chartSemanal'), {
+    type: 'line',
+    data: {
+      labels: npsPorSemana.map(d => d.semana),
+      datasets: [{
+        data: npsPorSemana.map(d => d.nps),
+        borderColor: '#FF6840',
+        backgroundColor: 'rgba(255,104,64,0.07)',
+        fill: true, tension: 0.35,
+        pointRadius: 4, pointBackgroundColor: '#FF6840',
+        borderWidth: 2
+      }]
+    },
+    options: baseOpts
+  });
+
+  chartMensual = new Chart(document.getElementById('chartMensual'), {
+    type: 'bar',
+    data: {
+      labels: npsPorMes.map(d => d.mes),
+      datasets: [{
+        data: npsPorMes.map(d => d.nps),
+        backgroundColor: npsPorMes.map((d, i) => i === npsPorMes.length - 1 ? '#FF6840' : '#2a2a28'),
+        borderRadius: 4, borderSkipped: false
+      }]
+    },
+    options: { ...baseOpts }
+  });
+}
+
+loadData();
+</script>
+</body>
+</html>
+
