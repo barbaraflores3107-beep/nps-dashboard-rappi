@@ -104,35 +104,13 @@
 </div>
 
 <script>
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTrgdlSk_kxhQHay_sq7UAI943wxLsmDoQX5APvJldTRMdA350jF3r-mrH5vXv6AwE1sYu_yXOHs-C_/pub?gid=1119032516&single=true&output=csv';
+const API_KEY = 'AIzaSyCfJCB4yMMLh2eGNtEAjOFzV-rgUnkEMw4';
+const SHEET_ID = '1ZXzreW_JA0xXP67_nxslVwlRWLD7FK2KoyUAePs4Zas';
+const SHEET_NAME = encodeURIComponent('NPS MAR/3 26');
 
 let allData = [];
 let chartSemanal = null;
 let chartMensual = null;
-
-function csvToRows(text) {
-  const lines = text.trim().split('\n');
-  const headers = parseCSVLine(lines[0]);
-  return lines.slice(1).map(l => {
-    const vals = parseCSVLine(l);
-    const obj = {};
-    headers.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
-    return obj;
-  }).filter(r => r);
-}
-
-function parseCSVLine(line) {
-  const result = [];
-  let cur = '', inQ = false;
-  for (let i = 0; i < line.length; i++) {
-    const c = line[i];
-    if (c === '"') { inQ = !inQ; continue; }
-    if (c === ',' && !inQ) { result.push(cur); cur = ''; continue; }
-    cur += c;
-  }
-  result.push(cur);
-  return result;
-}
 
 function getNPSType(score) {
   const s = parseFloat(score);
@@ -159,37 +137,25 @@ async function loadData() {
   chartSemanal = null; chartMensual = null;
 
   try {
-    const res = await fetch(CSV_URL);
-    if (!res.ok) throw new Error('No se pudo acceder al Sheet');
-    const text = await res.text();
-    const rows = csvToRows(text);
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || 'Error ' + res.status);
+    }
+    const json = await res.json();
+    const rows = json.values;
+    if (!rows || rows.length < 2) throw new Error('Sin datos en el Sheet');
 
-    // Detect columns — headers visible in screenshot
-    // Col X = "¿Qué tan probable es que recomiendes Rappi a otro conductor?"
-    // Col Y = "Porque recomendarías o no recomendarías a Rappi?"
-    // Col Z = "SEMANA"
-    // Col W = "MES"
-    const sample = rows[0];
-    const keys = Object.keys(sample);
-
-    // Find by index: col X = index 23, Y = 24, Z = 25, W = 22 (0-based)
-    // But let's detect by partial header match to be safe
-    const colNPS = keys.find(k => k.toLowerCase().includes('rappi') && k.toLowerCase().includes('probable')) || keys[23];
-    const colComment = keys.find(k => k.toLowerCase().includes('recomendaría') || k.toLowerCase().includes('recomendarias')) || keys[24];
-    const colSemana = keys.find(k => k.toUpperCase() === 'SEMANA') || keys[25];
-    const colMes = keys.find(k => k.toUpperCase() === 'MES') || keys[22];
-    const colNombre = keys.find(k => k.toLowerCase().includes('nombre') || k.toLowerCase().includes('repartidor')) || keys[0];
-
-    allData = rows.map(r => ({
-      nombre: r[colNombre] || '',
-      _scoreRappi: r[colNPS] || '',
-      comentario: r[colComment] || '',
-      semana: r[colSemana] || '',
-      mes: r[colMes] || '',
-      tipo: getNPSType(r[colNPS])
+    allData = rows.slice(1).map(r => ({
+      nombre: (r[0] || '').trim(),
+      _scoreRappi: (r[23] || '').trim(),
+      comentario: (r[24] || '').trim(),
+      semana: (r[25] || '').trim(),
+      mes: (r[22] || '').trim(),
+      tipo: getNPSType((r[23] || '').trim())
     })).filter(r => r._scoreRappi !== '' && r.semana !== '');
 
-    // Populate filters
     const semanas = unique(allData.map(r => r.semana));
     const meses = unique(allData.map(r => r.mes));
     const selS = document.getElementById('filterSemana');
@@ -198,17 +164,16 @@ async function loadData() {
     selM.innerHTML = '<option value="">Todos los meses</option>' + meses.map(m => `<option value="${m}">${m}</option>`).join('');
 
     const lastSemana = semanas[semanas.length - 1];
-    document.getElementById('subtitle').textContent = `Encuesta semanal · ${allData.length} respuestas · última semana: ${lastSemana}`;
+    document.getElementById('subtitle').textContent = `Encuesta semanal · ${allData.length} respuestas · ultima semana: ${lastSemana}`;
 
     renderDashboard();
 
-    // Bind filters
     ['filterSemana','filterMes','filterTipo'].forEach(id => {
       document.getElementById(id).onchange = renderDashboard;
     });
 
   } catch(e) {
-    document.getElementById('main-content').innerHTML = `<div class="loading" style="color:#F09595;">Error: ${e.message}. Verifica que el Sheet sea público.</div>`;
+    document.getElementById('main-content').innerHTML = `<div class="loading" style="color:#F09595;">Error: ${e.message}</div>`;
   }
 }
 
