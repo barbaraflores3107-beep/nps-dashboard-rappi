@@ -187,7 +187,7 @@ async function loadData() {
       semana: r[colSemana] || '',
       mes: r[colMes] || '',
       tipo: getNPSType(r[colNPS])
-    })).filter(r => r._scoreRappi !== '' && r.semana !== '');
+    })).filter(r => r._scoreRappi !== '');
 
     // Populate filters
     const semanas = unique(allData.map(r => r.semana));
