@@ -30,10 +30,12 @@
   .metric{background:#1a1a18;border:0.5px solid #252523;border-radius:10px;padding:1rem 1.25rem;}
   .metric-label{font-size:11px;color:#666;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
   .metric-value{font-size:30px;font-weight:500;color:#f0ede8;line-height:1;}
-  .metric-delta{font-size:11px;margin-top:6px;}
-  .up{color:#5DCAA5;}
-  .down{color:#F09595;}
-  .neutral{color:#888;}
+  .metric-delta{font-size:11px;margin-top:8px;}
+  .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:500;}
+  .up{background:#0d3d2e;color:#5DCAA5;}
+  .down{background:#3d1010;color:#F09595;}
+  .neutral{background:#2a2a28;color:#888;}
+  .metric-sub{font-size:11px;color:#555;margin-top:5px;}
 
   /* charts row */
   .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -194,7 +196,14 @@ function renderDashboard() {
   const mesFilter = document.getElementById('filterMes').value;
 
   // NPS global del filtro actual
+  const semanaFilter2 = document.getElementById('filterSemana').value;
   const npsActual = calcNPS(filtered);
+  const npsToShow = semanaFilter2 ? npsActual : npsUltima;
+  const npsPrevToShow = semanaFilter2 ? (function(){
+    const semanasAll = unique(allData.map(r=>r.semana));
+    const idx = semanasAll.indexOf(semanaFilter2);
+    return idx > 0 ? calcNPS(allData.filter(r=>r.semana===semanasAll[idx-1])) : null;
+  })() : npsAnterior;
 
   // NPS por semana (todos los datos, sin filtro de semana)
   const baseForSemana = mesFilter
@@ -236,24 +245,26 @@ function renderDashboard() {
   // Comentarios con texto
   const conComentario = filtered.filter(r => r.comentario && r.comentario.length > 2);
 
-  const deltaHTML = (d, label) => {
-    if (d === null) return `<span class="neutral">sin dato previo</span>`;
-    if (d > 0) return `<span class="up">+${d} ${label}</span>`;
-    if (d < 0) return `<span class="down">${d} ${label}</span>`;
-    return `<span class="neutral">= ${label}</span>`;
+  const deltaHTML = (d, prev, label) => {
+    if (d === null || prev === null) return `<span class="badge neutral">sin dato previo</span>`;
+    const diff = d - prev;
+    const pct = prev !== 0 ? Math.round(Math.abs(diff) / Math.abs(prev) * 100) : 0;
+    if (diff > 0) return `<span class="badge up">▲ ${pct}% ${label}</span><div class="metric-sub">Semana anterior: ${prev}</div>`;
+    if (diff < 0) return `<span class="badge down">▼ ${pct}% ${label}</span><div class="metric-sub">Semana anterior: ${prev}</div>`;
+    return `<span class="badge neutral">= sin cambio</span><div class="metric-sub">Semana anterior: ${prev}</div>`;
   };
 
   document.getElementById('main-content').innerHTML = `
     <div class="metrics">
       <div class="metric">
-        <div class="metric-label">NPS última semana</div>
-        <div class="metric-value nps-big">${npsUltima !== null ? npsUltima : '—'}</div>
-        <div class="metric-delta">${deltaHTML(deltaSemana, 'vs semana anterior')}</div>
+        <div class="metric-label">NPS Semanal</div>
+        <div class="metric-value nps-big">${npsToShow !== null ? npsToShow : '—'}</div>
+        <div class="metric-delta">${deltaHTML(npsToShow, npsPrevToShow, 'vs sem. ant.')}</div>
       </div>
       <div class="metric">
         <div class="metric-label">NPS promedio del mes</div>
         <div class="metric-value nps-big">${npsUltimoMes !== null ? npsUltimoMes : '—'}</div>
-        <div class="metric-delta">${deltaHTML(deltaMes, 'vs mes anterior')}</div>
+        <div class="metric-delta">${deltaHTML(npsUltimoMes, npsAnteriorMes, 'vs mes ant.')}</div>
       </div>
       <div class="metric">
         <div class="metric-label">Respuestas totales</div>
