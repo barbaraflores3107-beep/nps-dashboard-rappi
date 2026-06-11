@@ -126,7 +126,8 @@ for(let i=0;i<60;i++){
 const API_KEY = 'AIzaSyCfJCB4yMMLh2eGNtEAjOFzV-rgUnkEMw4';
 const SHEET_ID = '1ZXzreW_JA0xXP67_nxslVwlRWLD7FK2KoyUAePs4Zas';
 const SHEET_NAME = 'NPS%20MAR%2F3%2026';
-let allData = [], chartSemanal = null, chartMensual = null;
+const RIDERS_SHEET = 'Riders_start_date';
+let allData = [], ridersMap = {}, chartSemanal = null, chartMensual = null;
 
 function getNPSType(s){const n=parseFloat(s);if(isNaN(n))return null;return n>=9?'promotor':n>=7?'pasivo':'detractor';}
 function calcNPS(rows){const v=rows.map(r=>parseFloat(r._scoreRappi)).filter(s=>!isNaN(s));if(!v.length)return null;return Math.round(v.filter(s=>s>=9).length/v.length*100-v.filter(s=>s<=6).length/v.length*100);}
@@ -135,6 +136,18 @@ function unique(arr){return[...new Set(arr)].filter(Boolean).sort();}
 async function loadData(){
   document.getElementById('main-content').innerHTML='<div class="loading"><div class="spinner"></div> Cargando datos...</div>';
   try{
+    // Fetch riders map (name -> ID)
+    const ridersRes = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RIDERS_SHEET}?key=${API_KEY}`);
+    if(ridersRes.ok){
+      const ridersJson = await ridersRes.json();
+      const ridersRows = ridersJson.values || [];
+      ridersRows.slice(1).forEach(r => {
+        const nombre = (r[1]||'').trim();
+        const id = (r[4]||'').trim();
+        if(nombre && id) ridersMap[nombre] = id;
+      });
+    }
+
     const res=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`);
     if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'Error '+res.status);}
     const j=await res.json();
@@ -199,7 +212,9 @@ function renderDashboard(){
   const pN=total?Math.round(filtered.filter(r=>r.tipo==='pasivo').length/total*100):0;
   const pD=total?Math.round(filtered.filter(r=>r.tipo==='detractor').length/total*100):0;
   const semCom=document.getElementById('filterSemanaComentarios')?document.getElementById('filterSemanaComentarios').value:'';
-  const comentarios=(semCom?allData.filter(r=>r.semana===semCom):filtered).filter(r=>r.comentario&&r.comentario.length>2);
+  const riderFilter=document.getElementById('filterRider')?document.getElementById('filterRider').value:'';
+  let comentarios=(semCom?allData.filter(r=>r.semana===semCom):filtered).filter(r=>r.comentario&&r.comentario.length>2);
+  if(riderFilter) comentarios=allData.filter(r=>r.nombre===riderFilter&&r.comentario&&r.comentario.length>2);
 
   document.getElementById('main-content').innerHTML=`
     <div class="metrics">
@@ -219,10 +234,16 @@ function renderDashboard(){
     <div class="glass comments-card">
       <div class="comments-header">
         <div style="font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);">Comentarios <span style="color:rgba(255,255,255,0.3);font-weight:400;">(${comentarios.length})</span></div>
-        <select id="filterSemanaComentarios" style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;outline:none;font-family:'Inter',sans-serif;">
-          <option value="">Todas las semanas</option>
-          ${unique(allData.map(r=>r.semana)).map(s=>`<option value="${s}"${s===semCom?' selected':''}>${s}</option>`).join('')}
-        </select>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <select id="filterRider" style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;outline:none;font-family:'Inter',sans-serif;">
+            <option value="">Todos los riders</option>
+            ${unique(allData.filter(r=>r.comentario&&r.comentario.length>2).map(r=>r.nombre)).map(n=>`<option value="${n}"${n===riderFilter?' selected':''}>${n}${ridersMap[n]?' · '+ridersMap[n]:''}</option>`).join('')}
+          </select>
+          <select id="filterSemanaComentarios" style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;outline:none;font-family:'Inter',sans-serif;">
+            <option value="">Todas las semanas</option>
+            ${unique(allData.map(r=>r.semana)).map(s=>`<option value="${s}"${s===semCom?' selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
       </div>
       ${comentarios.length===0?'<div class="no-comments">Sin comentarios para este filtro</div>':comentarios.map(r=>`
         <div class="comment">
@@ -243,6 +264,8 @@ function renderDashboard(){
   chartMensual=new Chart(document.getElementById('chartMensual'),{type:'bar',data:{labels:npsMes.map(d=>d.mes),datasets:[{data:npsMes.map(d=>d.nps),backgroundColor:npsMes.map((_,i)=>i===npsMes.length-1?'#FF6840':'rgba(255,255,255,0.08)'),borderRadius:4,borderSkipped:false}]},options:{...opts}});
   const fc=document.getElementById('filterSemanaComentarios');
   if(fc)fc.onchange=renderDashboard;
+  const fr=document.getElementById('filterRider');
+  if(fr)fr.onchange=renderDashboard;
 }
 
 loadData();
