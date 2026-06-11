@@ -7,75 +7,54 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:#0d0d0c;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f0ede8;min-height:100vh;padding:2rem;}
+  body{background:#000;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#f0ede8;min-height:100vh;padding:2rem;}
   .dash{max-width:1100px;margin:0 auto;}
-
-  /* topbar */
-  .topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem;}
-  .topbar-left h1{font-size:20px;font-weight:500;color:#f0ede8;}
-  .topbar-left p{font-size:12px;color:#666;margin-top:4px;}
+  .topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+  .topbar-left h1{font-size:22px;font-weight:600;color:#fff;letter-spacing:-0.3px;}
+  .topbar-left p{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;}
   .topbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-  select{background:#1a1a18;border:0.5px solid #333;color:#ccc;font-size:12px;padding:7px 12px;border-radius:8px;cursor:pointer;outline:none;}
-  select:hover{border-color:#555;}
-  .refresh-btn{background:#1a1a18;border:0.5px solid #333;color:#ccc;font-size:12px;padding:7px 12px;border-radius:8px;cursor:pointer;}
-  .refresh-btn:hover{border-color:#555;color:#fff;}
-
-  /* loading */
-  .loading{display:flex;align-items:center;justify-content:center;height:300px;color:#555;font-size:14px;gap:10px;}
-  .spinner{width:18px;height:18px;border:2px solid #333;border-top-color:#FF6840;border-radius:50%;animation:spin .7s linear infinite;}
+  select{background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);font-size:12px;padding:7px 12px;border-radius:10px;cursor:pointer;outline:none;backdrop-filter:blur(10px);}
+  select:hover{border-color:rgba(255,255,255,0.25);}
+  .refresh-btn{background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);font-size:12px;padding:7px 12px;border-radius:10px;cursor:pointer;backdrop-filter:blur(10px);}
+  .refresh-btn:hover{border-color:rgba(255,255,255,0.25);color:#fff;}
+  .loading{display:flex;align-items:center;justify-content:center;height:300px;color:rgba(255,255,255,0.3);font-size:14px;gap:10px;}
+  .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.1);border-top-color:#FF6840;border-radius:50%;animation:spin .7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
-
-  /* metrics */
-  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem;}
-  .metric{background:#1a1a18;border:0.5px solid #252523;border-radius:10px;padding:1rem 1.25rem;}
-  .metric-label{font-size:11px;color:#666;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-  .metric-value{font-size:30px;font-weight:500;color:#f0ede8;line-height:1;}
-  .metric-delta{font-size:11px;margin-top:8px;}
-  .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:500;}
-  .up{background:#0d3d2e;color:#5DCAA5;}
-  .down{background:#3d1010;color:#F09595;}
-  .neutral{background:#2a2a28;color:#888;}
-  .metric-sub{font-size:11px;color:#555;margin-top:5px;}
-
-  /* charts row */
-  .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-  .card{background:#1a1a18;border:0.5px solid #252523;border-radius:10px;padding:1.25rem;}
-  .card-title{font-size:12px;font-weight:500;color:#aaa;margin-bottom:14px;}
-
-  /* distribucion */
-  .dist-row{display:flex;gap:6px;height:8px;border-radius:4px;overflow:hidden;margin:8px 0 6px;}
+  .glass{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:16px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+  .metric{padding:1.25rem 1.5rem;}
+  .metric-label{font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;}
+  .metric-value{font-size:32px;font-weight:600;color:#fff;line-height:1;}
+  .nps-big{color:#FF6840;}
+  .metric-delta{font-size:11px;margin-top:10px;}
+  .badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:500;}
+  .up{background:rgba(93,202,165,0.15);color:#5DCAA5;border:0.5px solid rgba(93,202,165,0.2);}
+  .down{background:rgba(240,149,149,0.15);color:#F09595;border:0.5px solid rgba(240,149,149,0.2);}
+  .neutral{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.1);}
+  .metric-sub{font-size:11px;color:rgba(255,255,255,0.25);margin-top:5px;}
+  .dist-row{display:flex;gap:3px;height:6px;border-radius:10px;overflow:hidden;margin:10px 0 8px;}
   .dist-bar{height:100%;transition:width .5s;}
-  .dist-labels{display:flex;justify-content:space-between;font-size:10px;color:#666;}
+  .dist-labels{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.35);}
   .dist-item{display:flex;align-items:center;gap:4px;}
-  .dot{width:7px;height:7px;border-radius:50%;}
-
-  /* comments */
-  .comments-card{background:#1a1a18;border:0.5px solid #252523;border-radius:10px;padding:1.25rem;margin-top:10px;}
+  .dot{width:6px;height:6px;border-radius:50%;}
+  .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  .card{padding:1.25rem;}
+  .card-title{font-size:11px;font-weight:500;color:rgba(255,255,255,0.4);margin-bottom:14px;text-transform:uppercase;letter-spacing:0.5px;}
+  .comments-card{padding:1.25rem;margin-top:12px;}
   .comments-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
-  .pills{display:flex;gap:6px;flex-wrap:wrap;}
-  .pill{font-size:11px;padding:4px 11px;border-radius:20px;border:0.5px solid #333;color:#888;cursor:pointer;background:transparent;transition:all .2s;}
-  .pill:hover{border-color:#555;color:#ccc;}
-  .pill.active{background:#FF6840;border-color:#FF6840;color:#fff;}
-  .comment{padding:11px 0;border-bottom:0.5px solid #1e1e1c;}
+  .comment{padding:12px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);}
   .comment:last-child{border-bottom:none;}
   .comment-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;flex-wrap:wrap;gap:6px;}
-  .comment-name{font-size:12px;font-weight:500;color:#d4d1cc;}
+  .comment-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.85);}
   .comment-meta{display:flex;gap:6px;align-items:center;}
-  .week-tag{font-size:10px;color:#666;background:#151513;padding:2px 8px;border-radius:20px;border:0.5px solid #2a2a28;}
+  .week-tag{font-size:10px;color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:20px;border:0.5px solid rgba(255,255,255,0.08);}
   .score-tag{font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;}
-  .promotor{background:#063a2e;color:#5DCAA5;}
-  .pasivo{background:#3d2400;color:#EF9F27;}
-  .detractor{background:#3d1010;color:#F09595;}
-  .comment-text{font-size:12px;color:#777;line-height:1.6;}
-  .no-comments{font-size:13px;color:#555;padding:1.5rem 0;text-align:center;}
-
-  /* nps gauge number */
-  .nps-big{font-size:30px;font-weight:500;color:#FF6840;}
-
-  @media(max-width:600px){
-    .metrics{grid-template-columns:1fr 1fr;}
-    .charts-row{grid-template-columns:1fr;}
-  }
+  .promotor{background:rgba(93,202,165,0.12);color:#5DCAA5;border:0.5px solid rgba(93,202,165,0.2);}
+  .pasivo{background:rgba(239,159,39,0.12);color:#EF9F27;border:0.5px solid rgba(239,159,39,0.2);}
+  .detractor{background:rgba(240,149,149,0.12);color:#F09595;border:0.5px solid rgba(240,149,149,0.2);}
+  .comment-text{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.6;}
+  .no-comments{font-size:13px;color:rgba(255,255,255,0.2);padding:1.5rem 0;text-align:center;}
+  @media(max-width:600px){.metrics{grid-template-columns:1fr 1fr;}.charts-row{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -279,7 +258,7 @@ function renderDashboard() {
       </div>
     </div>
 
-    <div style="background:#1a1a18;border:0.5px solid #252523;border-radius:10px;padding:1.25rem;margin-bottom:10px;">
+    <div class="glass" style="padding:1.25rem;margin-bottom:12px;">
       <div class="card-title">Distribución de respuestas</div>
       <div class="dist-row">
         <div class="dist-bar" style="width:${pP}%;background:#5DCAA5;"></div>
@@ -308,7 +287,7 @@ function renderDashboard() {
       </div>
     </div>
 
-    <div class="comments-card">
+    <div class="glass comments-card">
       <div class="comments-header">
         <div style="font-size:12px;font-weight:500;color:#aaa;">Comentarios de riders <span style="color:#555;font-weight:400;">(${conComentario.length})</span></div>
       </div>
