@@ -9,45 +9,33 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',-apple-system,sans-serif;background:#050505;color:#f0ede8;}
-
-/* HERO */
-.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;}
+.hero{position:relative;height:100vh;min-height:580px;overflow:hidden;}
 .hero-bg{position:absolute;inset:0;background:url('riders.jpg') center 40%/cover no-repeat;filter:blur(2px) brightness(0.38);transform:scale(1.05);}
 .hero-ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.4) 45%,rgba(0,0,0,0.97) 100%);}
 .hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:48px 56px;}
 .eyebrow{font-size:11px;color:rgba(255,255,255,0.38);letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,8vw,100px);color:#fff;line-height:0.88;letter-spacing:3px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,8vw,96px);color:#fff;line-height:0.88;letter-spacing:3px;}
 .hero-divider{width:48px;height:2px;background:#FF4713;margin:18px 0;}
-.hero-sub{font-size:13px;color:rgba(255,255,255,0.32);font-weight:300;letter-spacing:0.5px;margin-bottom:16px;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.32);font-weight:300;margin-bottom:16px;}
 .hero-pills{display:flex;gap:8px;flex-wrap:wrap;}
 .hp{background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.12);padding:6px 14px;border-radius:20px;font-size:11px;color:rgba(255,255,255,0.42);}
 .hp b{color:#FF6840;font-weight:600;}
 .scroll-hint{font-size:9px;color:rgba(255,255,255,0.18);margin-top:12px;letter-spacing:2px;text-transform:uppercase;}
-
-/* DASHBOARD */
 .dashboard{background:#050505;min-height:100vh;position:relative;overflow:hidden;}
 .dash-bg-words{position:absolute;inset:0;display:flex;flex-wrap:wrap;align-content:flex-start;padding:8px;opacity:0.038;pointer-events:none;overflow:hidden;}
 .dw{font-size:28px;font-weight:700;color:#fff;white-space:nowrap;padding:6px 16px;letter-spacing:0.5px;}
-
-.topbar{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:0.5px solid rgba(255,255,255,0.06);background:rgba(5,5,5,0.8);backdrop-filter:blur(20px);}
+.topbar{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:0.5px solid rgba(255,255,255,0.06);background:rgba(5,5,5,0.85);backdrop-filter:blur(20px);}
 .topbar-left h1{font-size:16px;font-weight:500;color:#f0ede8;}
 .topbar-left p{font-size:11px;color:rgba(255,255,255,0.3);margin-top:3px;}
 .topbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 select{background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:11px;padding:7px 12px;border-radius:9px;cursor:pointer;outline:none;backdrop-filter:blur(8px);font-family:'Inter',sans-serif;}
-select:hover{border-color:rgba(255,255,255,0.22);}
 .refresh-btn{background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:11px;padding:7px 12px;border-radius:9px;cursor:pointer;font-family:'Inter',sans-serif;}
-
 .main-content{position:relative;z-index:2;padding:12px;}
-
 .loading{display:flex;align-items:center;justify-content:center;height:300px;color:rgba(255,255,255,0.3);font-size:13px;gap:10px;}
 .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.08);border-top-color:#FF6840;border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* GLASS CARDS */
 .glass{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);}
-
-/* BENTO */
-.bento{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;}
 .metric{padding:18px 20px;}
 .metric-label{font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:10px;}
 .metric-value{font-size:36px;font-weight:700;color:#FF6840;line-height:1;}
@@ -58,18 +46,15 @@ select:hover{border-color:rgba(255,255,255,0.22);}
 .down{background:rgba(240,149,149,0.1);color:#F09595;border:0.5px solid rgba(240,149,149,0.2);}
 .neutral{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.35);border:0.5px solid rgba(255,255,255,0.1);}
 .metric-sub{font-size:10px;color:rgba(255,255,255,0.2);margin-top:5px;}
-
-.dist-card{padding:16px 20px;margin-bottom:8px;}
+.dist-card{padding:16px 20px;margin-bottom:10px;}
 .card-title{font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:12px;}
 .dist-row{display:flex;gap:3px;height:5px;border-radius:10px;overflow:hidden;margin:8px 0 7px;}
 .dist-bar{height:100%;}
 .dist-labels{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.3);}
 .dist-item{display:flex;align-items:center;gap:5px;}
 .dot{width:6px;height:6px;border-radius:50%;}
-
-.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 .chart-card{padding:16px 20px;}
-
 .comments-card{padding:16px 20px;}
 .comments-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
 .comment{padding:12px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);}
@@ -84,18 +69,11 @@ select:hover{border-color:rgba(255,255,255,0.22);}
 .detractor{background:rgba(240,149,149,0.1);color:#F09595;border:0.5px solid rgba(240,149,149,0.18);}
 .comment-text{font-size:12px;color:rgba(255,255,255,0.38);line-height:1.6;}
 .no-comments{font-size:13px;color:rgba(255,255,255,0.2);padding:2rem 0;text-align:center;}
-
-@media(max-width:700px){
-  .hero-content{padding:32px 24px;}
-  .bento{grid-template-columns:1fr 1fr;}
-  .charts-row{grid-template-columns:1fr;}
-  .topbar{flex-direction:column;align-items:flex-start;gap:10px;}
-}
+@media(max-width:700px){.hero-content{padding:32px 24px;}.metrics{grid-template-columns:1fr 1fr;}.charts-row{grid-template-columns:1fr;}.topbar{flex-direction:column;align-items:flex-start;gap:10px;}}
 </style>
 </head>
 <body>
 
-<!-- PANTALLA 1: HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-ov"></div>
@@ -105,16 +83,14 @@ select:hover{border-color:rgba(255,255,255,0.22);}
     <div class="hero-divider"></div>
     <div class="hero-sub">Resultados semanales de experiencia · Riders</div>
     <div class="hero-pills" id="hero-pills">
-      <div class="hp">Cargando datos...</div>
+      <div class="hp">Cargando...</div>
     </div>
     <div class="scroll-hint">↓ ver resultados</div>
   </div>
 </section>
 
-<!-- PANTALLA 2: DASHBOARD -->
 <section class="dashboard">
   <div class="dash-bg-words" id="bg-words"></div>
-
   <div class="topbar">
     <div class="topbar-left">
       <h1>NPS Rappi — Riders</h1>
@@ -132,290 +108,144 @@ select:hover{border-color:rgba(255,255,255,0.22);}
       <button class="refresh-btn" onclick="loadData()">↻ Actualizar</button>
     </div>
   </div>
-
   <div class="main-content" id="main-content">
     <div class="loading"><div class="spinner"></div> Cargando datos...</div>
   </div>
 </section>
 
-
-
 <script>
-const API_KEY = 'AIzaSyCfJCB4yMMLh2eGNtEAjOFzV-rgUnkEMw4';
-const SHEET_ID = '1ZXzreW_JA0xXP67_nxslVwlRWLD7FK2KoyUAePs4Zas';
-const SHEET_NAME = 'NPS%20MAR%2F3%2026';
-
-let allData = [];
-let chartSemanal = null;
-let chartMensual = null;
-
-function getNPSType(score) {
-  const s = parseFloat(score);
-  if (isNaN(s)) return null;
-  if (s >= 9) return 'promotor';
-  if (s >= 7) return 'pasivo';
-  return 'detractor';
-}
-
-function calcNPS(rows) {
-  const valid = rows.map(r => parseFloat(r._scoreRappi)).filter(s => !isNaN(s));
-  if (!valid.length) return null;
-  const pct_p = valid.filter(s => s >= 9).length / valid.length * 100;
-  const pct_d = valid.filter(s => s <= 6).length / valid.length * 100;
-  return Math.round(pct_p - pct_d);
-}
-
-function unique(arr) {
-  return [...new Set(arr)].filter(Boolean).sort();
-}
-
-async function loadData() {
-  document.getElementById('main-content').innerHTML = '<div class="loading"><div class="spinner"></div> Cargando datos...</div>';
-  chartSemanal = null; chartMensual = null;
-  try {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
-    const res = await fetch(url);
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.error?.message || 'Error ' + res.status);
-    }
-    const json_data = await res.json();
-    const rows = json_data.values;
-    if (!rows || rows.length < 2) throw new Error('Sin datos en el Sheet');
-
-    allData = rows.slice(1).map(r => ({
-      nombre: (r[0] || '').trim(),
-      _scoreRappi: (r[23] || '').trim(),
-      comentario: (r[24] || '').trim(),
-      semana: (r[25] || '').trim(),
-      mes: (r[22] || '').trim(),
-      tipo: getNPSType((r[23] || '').trim())
-    })).filter(r => r._scoreRappi !== '');
-
-    const semanas = unique(allData.map(r => r.semana));
-    const meses = unique(allData.map(r => r.mes));
-    const selS = document.getElementById('filterSemana');
-    const selM = document.getElementById('filterMes');
-    selS.innerHTML = '<option value="">Todas las semanas</option>' + semanas.map(s => `<option value="${s}">${s}</option>`).join('');
-    selM.innerHTML = '<option value="">Todos los meses</option>' + meses.map(m => `<option value="${m}">${m}</option>`).join('');
-
-    const lastSemana = semanas[semanas.length - 1];
-    document.getElementById('subtitle').textContent = `Encuesta semanal · ${allData.length} respuestas · última semana: ${lastSemana}`;
-
-    renderDashboard();
-    updateHeroPills();
-
-    ['filterSemana','filterMes','filterTipo'].forEach(id => {
-      document.getElementById(id).onchange = renderDashboard;
-    });
-    const fcEl = document.getElementById('filterSemanaComentarios');
-    if (fcEl) fcEl.onchange = renderDashboard;
-
-  } catch(e) {
-    document.getElementById('main-content').innerHTML = `<div class="loading" style="color:#F09595;">Error: ${e.message}</div>`;
-  }
-}
-
-function updateHeroPills() {
-  const semanas = unique(allData.map(r => r.semana));
-  const lastSem = semanas[semanas.length - 1];
-  const nps = calcNPS(allData.filter(r => r.semana === lastSem));
-  const pillsEl = document.getElementById('hero-pills');
-  if (pillsEl) {
-    pillsEl.innerHTML = `
-      <div class="hp"><b>${allData.length}</b> respuestas</div>
-      <div class="hp">Última sem. <b>${lastSem || '—'}</b></div>
-      <div class="hp">NPS <b>${nps !== null ? nps : '—'}</b></div>
-    `;
-  }
-}
-
-function getFiltered() {
-  const semana = document.getElementById('filterSemana').value;
-  const mes = document.getElementById('filterMes').value;
-  const tipo = document.getElementById('filterTipo').value;
-  return allData.filter(r =>
-    (!semana || r.semana === semana) &&
-    (!mes || r.mes === mes) &&
-    (!tipo || r.tipo === tipo)
-  );
-}
-
-function renderDashboard() {
-  const filtered = getFiltered();
-  const semanaFilter = document.getElementById('filterSemana').value;
-  const mesFilter = document.getElementById('filterMes').value;
-
-  const npsActual = calcNPS(filtered);
-  const baseForSemana = mesFilter ? allData.filter(r => r.mes === mesFilter) : allData;
-  const semanas = unique(baseForSemana.map(r => r.semana));
-  const npsPorSemana = semanas.map(s => ({
-    semana: s,
-    nps: calcNPS(baseForSemana.filter(r => r.semana === s)),
-    n: baseForSemana.filter(r => r.semana === s).length
-  }));
-
-  const meses = unique(allData.map(r => r.mes));
-  const npsPorMes = meses.map(m => ({
-    mes: m,
-    nps: calcNPS(allData.filter(r => r.mes === m)),
-    n: allData.filter(r => r.mes === m).length
-  }));
-
-  const lastIdx = npsPorSemana.length - 1;
-  const npsUltima = lastIdx >= 0 ? npsPorSemana[lastIdx].nps : null;
-  const npsAnterior = lastIdx >= 1 ? npsPorSemana[lastIdx - 1].nps : null;
-
-  const lastMesIdx = npsPorMes.length - 1;
-  const npsUltimoMes = lastMesIdx >= 0 ? npsPorMes[lastMesIdx].nps : null;
-  const npsAnteriorMes = lastMesIdx >= 1 ? npsPorMes[lastMesIdx - 1].nps : null;
-
-  const semanaFilter2 = document.getElementById('filterSemana').value;
-  const npsToShow = semanaFilter2 ? npsActual : npsUltima;
-  const npsPrevToShow = semanaFilter2 ? (function(){
-    const semanasAll = unique(allData.map(r=>r.semana));
-    const idx = semanasAll.indexOf(semanaFilter2);
-    return idx > 0 ? calcNPS(allData.filter(r=>r.semana===semanasAll[idx-1])) : null;
-  })() : npsAnterior;
-
-  const total = filtered.length;
-  const pP = total ? Math.round(filtered.filter(r => r.tipo === 'promotor').length / total * 100) : 0;
-  const pN = total ? Math.round(filtered.filter(r => r.tipo === 'pasivo').length / total * 100) : 0;
-  const pD = total ? Math.round(filtered.filter(r => r.tipo === 'detractor').length / total * 100) : 0;
-
-  const semanaComentarios = document.getElementById('filterSemanaComentarios') ? document.getElementById('filterSemanaComentarios').value : '';
-  const conComentario = (semanaComentarios ? allData.filter(r => r.semana === semanaComentarios) : filtered).filter(r => r.comentario && r.comentario.length > 2);
-
-  const deltaHTML = (d, prev, label) => {
-    if (d === null || prev === null) return `<span class="badge neutral">sin dato previo</span>`;
-    const diff = d - prev;
-    const pct = prev !== 0 ? Math.round(Math.abs(diff) / Math.abs(prev) * 100) : 0;
-    if (diff > 0) return `<span class="badge up">▲ ${pct}% ${label}</span><div class="metric-sub">Anterior: ${prev}</div>`;
-    if (diff < 0) return `<span class="badge down">▼ ${pct}% ${label}</span><div class="metric-sub">Anterior: ${prev}</div>`;
-    return `<span class="badge neutral">= sin cambio</span><div class="metric-sub">Anterior: ${prev}</div>`;
-  };
-
-  document.getElementById('main-content').innerHTML = `
-    <div class="bento">
-      <div class="glass metric">
-        <div class="metric-label">NPS Semanal</div>
-        <div class="metric-value">${npsToShow !== null ? npsToShow : '—'}</div>
-        <div class="metric-delta">${deltaHTML(npsToShow, npsPrevToShow, 'vs sem. ant.')}</div>
-      </div>
-      <div class="glass metric">
-        <div class="metric-label">NPS Promedio del mes</div>
-        <div class="metric-value">${npsUltimoMes !== null ? npsUltimoMes : '—'}</div>
-        <div class="metric-delta">${deltaHTML(npsUltimoMes, npsAnteriorMes, 'vs mes ant.')}</div>
-      </div>
-      <div class="glass metric">
-        <div class="metric-label">Respuestas totales</div>
-        <div class="metric-value white">${total}</div>
-        <div class="metric-delta">
-          <span style="color:#5DCAA5;">${pP}% promotores</span> ·
-          <span style="color:#EF9F27;">${pN}% pasivos</span> ·
-          <span style="color:#F09595;">${pD}% detractores</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="glass dist-card">
-      <div class="card-title">Distribución de respuestas</div>
-      <div class="dist-row">
-        <div class="dist-bar" style="width:${pP}%;background:#5DCAA5;"></div>
-        <div class="dist-bar" style="width:${pN}%;background:#EF9F27;"></div>
-        <div class="dist-bar" style="width:${pD}%;background:#F09595;"></div>
-      </div>
-      <div class="dist-labels">
-        <div class="dist-item"><span class="dot" style="background:#5DCAA5;"></span> Promotores ${pP}%</div>
-        <div class="dist-item"><span class="dot" style="background:#EF9F27;"></span> Pasivos ${pN}%</div>
-        <div class="dist-item"><span class="dot" style="background:#F09595;"></span> Detractores ${pD}%</div>
-      </div>
-    </div>
-
-    <div class="charts-row">
-      <div class="glass chart-card">
-        <div class="card-title">NPS por semana</div>
-        <div style="position:relative;height:180px;"><canvas id="chartSemanal"></canvas></div>
-      </div>
-      <div class="glass chart-card">
-        <div class="card-title">NPS promedio mensual</div>
-        <div style="position:relative;height:180px;"><canvas id="chartMensual"></canvas></div>
-      </div>
-    </div>
-
-    <div class="glass comments-card">
-      <div class="comments-header">
-        <div style="font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);">Comentarios <span style="color:rgba(255,255,255,0.3);font-weight:400;">(${conComentario.length})</span></div>
-        <select id="filterSemanaComentarios" style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;outline:none;font-family:'Inter',sans-serif;">
-          <option value="">Todas las semanas</option>
-          ${unique(allData.map(r=>r.semana)).map(s=>`<option value="${s}" ${s===semanaComentarios?'selected':''}>${s}</option>`).join('')}
-        </select>
-      </div>
-      ${conComentario.length === 0
-        ? '<div class="no-comments">Sin comentarios para este filtro</div>'
-        : conComentario.map(r => `
-          <div class="comment">
-            <div class="comment-top">
-              <span class="comment-name">${r.nombre || 'Rider'}</span>
-              <div class="comment-meta">
-                <span class="score-tag ${r.tipo}">${r.tipo === 'promotor' ? 'Promotor' : r.tipo === 'pasivo' ? 'Pasivo' : 'Detractor'} · ${r._scoreRappi}</span>
-                <span class="week-tag">${r.semana}</span>
-              </div>
-            </div>
-            <div class="comment-text">${r.comentario}</div>
-          </div>`).join('')}
-    </div>
-  `;
-
-  const gridColor = 'rgba(255,255,255,0.05)';
-  const tickColor = 'rgba(255,255,255,0.3)';
-  const baseOpts = {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(10,10,10,0.9)',titleColor:'#ccc',bodyColor:'rgba(255,255,255,0.5)',borderColor:'rgba(255,255,255,0.1)',borderWidth:0.5,padding:10}},
-    scales:{x:{grid:{display:false},ticks:{color:tickColor,font:{size:10}}},y:{min:-100,max:100,grid:{color:gridColor},ticks:{color:tickColor,font:{size:10},stepSize:50}}}
-  };
-
-  chartSemanal = new Chart(document.getElementById('chartSemanal'),{
-    type:'line',
-    data:{labels:npsPorSemana.map(d=>d.semana),datasets:[{data:npsPorSemana.map(d=>d.nps),borderColor:'#FF6840',backgroundColor:'rgba(255,104,64,0.07)',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:'#FF6840',borderWidth:2}]},
-    options:baseOpts
-  });
-  chartMensual = new Chart(document.getElementById('chartMensual'),{
-    type:'bar',
-    data:{labels:npsPorMes.map(d=>d.mes),datasets:[{data:npsPorMes.map(d=>d.nps),backgroundColor:npsPorMes.map((_,i)=>i===npsPorMes.length-1?'#FF6840':'rgba(255,255,255,0.08)'),borderRadius:4,borderSkipped:false}]},
-    options:{...baseOpts}
-  });
-
-  const fcEl = document.getElementById('filterSemanaComentarios');
-  if (fcEl) fcEl.onchange = renderDashboard;
-}
-
-loadData();
-</script>
-<script>
-// Fill bg words
+// BG words
 const bgEl = document.getElementById('bg-words');
 for(let i=0;i<60;i++){
   ['mobi','RappiTurbo'].forEach(w=>{
     const s=document.createElement('span');
-    s.className='dw'; s.textContent=w; bgEl.appendChild(s);
+    s.className='dw';s.textContent=w;bgEl.appendChild(s);
   });
 }
 
-// Update hero pills after data loads
-const origLoadData = loadData;
-const _origRender = renderDashboard;
-renderDashboard = function(){
-  _origRender.apply(this,arguments);
-  const semanas = [...new Set(allData.map(r=>r.semana))].filter(Boolean).sort();
-  const lastSem = semanas[semanas.length-1];
-  const nps = calcNPS(allData.filter(r=>r.semana===lastSem));
-  document.getElementById('hero-pills').innerHTML = `
-    <div class="hp"><b>${allData.length}</b> respuestas</div>
-    <div class="hp">Última sem. <b>${lastSem||'—'}</b></div>
-    <div class="hp">NPS <b>${nps!==null?nps:'—'}</b></div>
-  `;
-};
+const API_KEY = 'AIzaSyCfJCB4yMMLh2eGNtEAjOFzV-rgUnkEMw4';
+const SHEET_ID = '1ZXzreW_JA0xXP67_nxslVwlRWLD7FK2KoyUAePs4Zas';
+const SHEET_NAME = 'NPS%20MAR%2F3%2026';
+let allData = [], chartSemanal = null, chartMensual = null;
+
+function getNPSType(s){const n=parseFloat(s);if(isNaN(n))return null;return n>=9?'promotor':n>=7?'pasivo':'detractor';}
+function calcNPS(rows){const v=rows.map(r=>parseFloat(r._scoreRappi)).filter(s=>!isNaN(s));if(!v.length)return null;return Math.round(v.filter(s=>s>=9).length/v.length*100-v.filter(s=>s<=6).length/v.length*100);}
+function unique(arr){return[...new Set(arr)].filter(Boolean).sort();}
+
+async function loadData(){
+  document.getElementById('main-content').innerHTML='<div class="loading"><div class="spinner"></div> Cargando datos...</div>';
+  try{
+    const res=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`);
+    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'Error '+res.status);}
+    const j=await res.json();
+    const rows=j.values;
+    if(!rows||rows.length<2)throw new Error('Sin datos');
+    allData=rows.slice(1).map(r=>({
+      nombre:(r[0]||'').trim(),
+      _scoreRappi:(r[23]||'').trim(),
+      comentario:(r[24]||'').trim(),
+      semana:(r[25]||'').trim(),
+      mes:(r[22]||'').trim(),
+      tipo:getNPSType((r[23]||'').trim())
+    })).filter(r=>r._scoreRappi!=='');
+    const semanas=unique(allData.map(r=>r.semana));
+    const meses=unique(allData.map(r=>r.mes));
+    document.getElementById('filterSemana').innerHTML='<option value="">Todas las semanas</option>'+semanas.map(s=>`<option value="${s}">${s}</option>`).join('');
+    document.getElementById('filterMes').innerHTML='<option value="">Todos los meses</option>'+meses.map(m=>`<option value="${m}">${m}</option>`).join('');
+    const last=semanas[semanas.length-1];
+    document.getElementById('subtitle').textContent=`Encuesta semanal · ${allData.length} respuestas · última semana: ${last}`;
+    const npsLast=calcNPS(allData.filter(r=>r.semana===last));
+    document.getElementById('hero-pills').innerHTML=`<div class="hp"><b>${allData.length}</b> respuestas</div><div class="hp">Última sem. <b>${last}</b></div><div class="hp">NPS <b>${npsLast!==null?npsLast:'—'}</b></div>`;
+    renderDashboard();
+    ['filterSemana','filterMes','filterTipo'].forEach(id=>document.getElementById(id).onchange=renderDashboard);
+  }catch(e){
+    document.getElementById('main-content').innerHTML=`<div class="loading" style="color:#F09595;">Error: ${e.message}</div>`;
+  }
+}
+
+function getFiltered(){
+  const s=document.getElementById('filterSemana').value;
+  const m=document.getElementById('filterMes').value;
+  const t=document.getElementById('filterTipo').value;
+  return allData.filter(r=>(!s||r.semana===s)&&(!m||r.mes===m)&&(!t||r.tipo===t));
+}
+
+function deltaHTML(d,prev,label){
+  if(d===null||prev===null)return`<span class="badge neutral">sin dato previo</span>`;
+  const diff=d-prev,pct=prev!==0?Math.round(Math.abs(diff)/Math.abs(prev)*100):0;
+  if(diff>0)return`<span class="badge up">▲ ${pct}% ${label}</span><div class="metric-sub">Anterior: ${prev}</div>`;
+  if(diff<0)return`<span class="badge down">▼ ${pct}% ${label}</span><div class="metric-sub">Anterior: ${prev}</div>`;
+  return`<span class="badge neutral">= sin cambio</span><div class="metric-sub">Anterior: ${prev}</div>`;
+}
+
+function renderDashboard(){
+  const filtered=getFiltered();
+  const semF=document.getElementById('filterSemana').value;
+  const mesF=document.getElementById('filterMes').value;
+  const npsActual=calcNPS(filtered);
+  const base=mesF?allData.filter(r=>r.mes===mesF):allData;
+  const semanas=unique(base.map(r=>r.semana));
+  const npsSem=semanas.map(s=>({semana:s,nps:calcNPS(base.filter(r=>r.semana===s))}));
+  const meses=unique(allData.map(r=>r.mes));
+  const npsMes=meses.map(m=>({mes:m,nps:calcNPS(allData.filter(r=>r.mes===m))}));
+  const li=npsSem.length-1;
+  const npsU=li>=0?npsSem[li].nps:null,npsP=li>=1?npsSem[li-1].nps:null;
+  const lm=npsMes.length-1;
+  const npsUM=lm>=0?npsMes[lm].nps:null,npsPM=lm>=1?npsMes[lm-1].nps:null;
+  const npsShow=semF?npsActual:npsU;
+  const npsPrev=semF?(()=>{const a=unique(allData.map(r=>r.semana));const i=a.indexOf(semF);return i>0?calcNPS(allData.filter(r=>r.semana===a[i-1])):null;})():npsP;
+  const total=filtered.length;
+  const pP=total?Math.round(filtered.filter(r=>r.tipo==='promotor').length/total*100):0;
+  const pN=total?Math.round(filtered.filter(r=>r.tipo==='pasivo').length/total*100):0;
+  const pD=total?Math.round(filtered.filter(r=>r.tipo==='detractor').length/total*100):0;
+  const semCom=document.getElementById('filterSemanaComentarios')?document.getElementById('filterSemanaComentarios').value:'';
+  const comentarios=(semCom?allData.filter(r=>r.semana===semCom):filtered).filter(r=>r.comentario&&r.comentario.length>2);
+
+  document.getElementById('main-content').innerHTML=`
+    <div class="metrics">
+      <div class="glass metric"><div class="metric-label">NPS Semanal</div><div class="metric-value">${npsShow!==null?npsShow:'—'}</div><div class="metric-delta">${deltaHTML(npsShow,npsPrev,'vs sem. ant.')}</div></div>
+      <div class="glass metric"><div class="metric-label">NPS Promedio del mes</div><div class="metric-value">${npsUM!==null?npsUM:'—'}</div><div class="metric-delta">${deltaHTML(npsUM,npsPM,'vs mes ant.')}</div></div>
+      <div class="glass metric"><div class="metric-label">Respuestas totales</div><div class="metric-value white">${total}</div><div class="metric-delta"><span style="color:#5DCAA5;">${pP}% promotores</span> · <span style="color:#EF9F27;">${pN}% pasivos</span> · <span style="color:#F09595;">${pD}% detractores</span></div></div>
+    </div>
+    <div class="glass dist-card">
+      <div class="card-title">Distribución de respuestas</div>
+      <div class="dist-row"><div class="dist-bar" style="width:${pP}%;background:#5DCAA5;"></div><div class="dist-bar" style="width:${pN}%;background:#EF9F27;"></div><div class="dist-bar" style="width:${pD}%;background:#F09595;"></div></div>
+      <div class="dist-labels"><div class="dist-item"><span class="dot" style="background:#5DCAA5;"></span>Promotores ${pP}%</div><div class="dist-item"><span class="dot" style="background:#EF9F27;"></span>Pasivos ${pN}%</div><div class="dist-item"><span class="dot" style="background:#F09595;"></span>Detractores ${pD}%</div></div>
+    </div>
+    <div class="charts-row">
+      <div class="glass chart-card"><div class="card-title">NPS por semana</div><div style="position:relative;height:180px;"><canvas id="chartSemanal"></canvas></div></div>
+      <div class="glass chart-card"><div class="card-title">NPS promedio mensual</div><div style="position:relative;height:180px;"><canvas id="chartMensual"></canvas></div></div>
+    </div>
+    <div class="glass comments-card">
+      <div class="comments-header">
+        <div style="font-size:12px;font-weight:500;color:rgba(255,255,255,0.7);">Comentarios <span style="color:rgba(255,255,255,0.3);font-weight:400;">(${comentarios.length})</span></div>
+        <select id="filterSemanaComentarios" style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;outline:none;font-family:'Inter',sans-serif;">
+          <option value="">Todas las semanas</option>
+          ${unique(allData.map(r=>r.semana)).map(s=>`<option value="${s}"${s===semCom?' selected':''}>${s}</option>`).join('')}
+        </select>
+      </div>
+      ${comentarios.length===0?'<div class="no-comments">Sin comentarios para este filtro</div>':comentarios.map(r=>`
+        <div class="comment">
+          <div class="comment-top">
+            <span class="comment-name">${r.nombre||'Rider'}</span>
+            <div class="comment-meta">
+              <span class="score-tag ${r.tipo}">${r.tipo==='promotor'?'Promotor':r.tipo==='pasivo'?'Pasivo':'Detractor'} · ${r._scoreRappi}</span>
+              <span class="week-tag">${r.semana}</span>
+            </div>
+          </div>
+          <div class="comment-text">${r.comentario}</div>
+        </div>`).join('')}
+    </div>`;
+
+  const gc='rgba(255,255,255,0.05)',tc='rgba(255,255,255,0.3)';
+  const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(5,5,5,0.9)',titleColor:'#ccc',bodyColor:'rgba(255,255,255,0.5)',borderColor:'rgba(255,255,255,0.08)',borderWidth:0.5,padding:10}},scales:{x:{grid:{display:false},ticks:{color:tc,font:{size:10}}},y:{min:-100,max:100,grid:{color:gc},ticks:{color:tc,font:{size:10},stepSize:50}}}};
+  chartSemanal=new Chart(document.getElementById('chartSemanal'),{type:'line',data:{labels:npsSem.map(d=>d.semana),datasets:[{data:npsSem.map(d=>d.nps),borderColor:'#FF6840',backgroundColor:'rgba(255,104,64,0.07)',fill:true,tension:0.35,pointRadius:4,pointBackgroundColor:'#FF6840',borderWidth:2}]},options:opts});
+  chartMensual=new Chart(document.getElementById('chartMensual'),{type:'bar',data:{labels:npsMes.map(d=>d.mes),datasets:[{data:npsMes.map(d=>d.nps),backgroundColor:npsMes.map((_,i)=>i===npsMes.length-1?'#FF6840':'rgba(255,255,255,0.08)'),borderRadius:4,borderSkipped:false}]},options:{...opts}});
+  const fc=document.getElementById('filterSemanaComentarios');
+  if(fc)fc.onchange=renderDashboard;
+}
+
+loadData();
 </script>
 </body>
 </html>
